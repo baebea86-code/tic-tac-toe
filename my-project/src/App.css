@@ -1,0 +1,284 @@
+/* ─── CSS Custom Properties ──────────────────────────────────────────────── */
+:root {
+  --x-color: #6366f1;      /* indigo */
+  --o-color: #f59e0b;      /* amber */
+  --win-glow: #22c55e;     /* green */
+  --draw-color: #94a3b8;   /* slate */
+  --radius: 12px;
+  --sq-size: clamp(72px, 20vw, 100px);
+  --gap: 8px;
+}
+
+/* ─── Layout ─────────────────────────────────────────────────────────────── */
+.app {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 48px;
+  gap: 32px;
+}
+
+.app__header {
+  text-align: center;
+}
+
+.app__title {
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -2px;
+  margin: 0;
+  line-height: 1;
+}
+
+.app__title-x   { color: var(--x-color); }
+.app__title-o   { color: var(--o-color); }
+.app__title-sep { color: var(--text); font-weight: 300; }
+
+.app__subtitle {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--text);
+  margin-top: 4px;
+}
+
+.app__main {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+  max-width: 800px;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .app__main {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ─── Game Section ───────────────────────────────────────────────────────── */
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ─── Status ─────────────────────────────────────────────────────────────── */
+.status {
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background: var(--code-bg);
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+  margin: 0;
+}
+
+.status--winner {
+  animation: pulse 0.6s ease-in-out;
+}
+.status--winner.status--x {
+  color: var(--x-color);
+  border-color: var(--x-color);
+  background: rgba(99, 102, 241, 0.1);
+}
+.status--winner.status--o {
+  color: var(--o-color);
+  border-color: var(--o-color);
+  background: rgba(245, 158, 11, 0.1);
+}
+.status--draw {
+  color: var(--draw-color);
+  border-color: var(--draw-color);
+}
+.status--next.status--x { color: var(--x-color); }
+.status--next.status--o { color: var(--o-color); }
+
+@keyframes pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* ─── Board ──────────────────────────────────────────────────────────────── */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, var(--sq-size));
+  grid-template-rows:    repeat(3, var(--sq-size));
+  gap: var(--gap);
+}
+
+/* ─── Square ─────────────────────────────────────────────────────────────── */
+.square {
+  width: var(--sq-size);
+  height: var(--sq-size);
+  border-radius: var(--radius);
+  border: 2px solid var(--border);
+  background: var(--bg);
+  font-size: clamp(1.6rem, 7vw, 2.4rem);
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    transform 0.1s,
+    box-shadow 0.15s;
+  outline-offset: 3px;
+}
+
+/* hover — only empty, interactive squares */
+.square--empty:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+  transform: scale(1.05);
+  box-shadow: var(--shadow);
+}
+
+/* filled X */
+.square--x {
+  color: var(--x-color);
+  border-color: rgba(99, 102, 241, 0.4);
+  background: rgba(99, 102, 241, 0.06);
+  cursor: default;
+}
+
+/* filled O */
+.square--o {
+  color: var(--o-color);
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.06);
+  cursor: default;
+}
+
+/* winning highlight */
+.square--winning {
+  background: rgba(34, 197, 94, 0.15) !important;
+  border-color: var(--win-glow) !important;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
+  animation: winPop 0.4s ease;
+}
+
+@keyframes winPop {
+  0%   { transform: scale(0.9); }
+  60%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* disabled state when game is over — keep colours, remove hover */
+.square:disabled {
+  cursor: not-allowed;
+}
+.square--empty:disabled:hover {
+  background: var(--bg);
+  border-color: var(--border);
+  transform: none;
+  box-shadow: none;
+}
+
+/* ─── Restart Button ─────────────────────────────────────────────────────── */
+.btn-restart {
+  padding: 10px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  border-radius: 999px;
+  border: 2px solid var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--accent);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  letter-spacing: 0.5px;
+}
+
+.btn-restart:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+.btn-restart:active {
+  transform: translateY(0);
+}
+
+/* ─── Move History / Time Travel ─────────────────────────────────────────── */
+.history {
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.history__title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--text);
+  font-weight: 600;
+  margin: 0;
+}
+
+.history__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.history__btn {
+  width: 100%;
+  padding: 8px 14px;
+  text-align: left;
+  font-size: 0.875rem;
+  font-family: inherit;
+  font-weight: 500;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.history__btn:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+.history__btn--active {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 700;
+  cursor: default;
+}
+
+/* ─── Responsive tweaks ──────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .history {
+    width: 100%;
+  }
+
+  .history__list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .history__btn {
+    width: auto;
+    flex: 1 1 calc(50% - 6px);
+  }
+}
