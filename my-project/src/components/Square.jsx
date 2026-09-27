@@ -17,12 +17,25 @@ export default function Square({ value, onClick, isWinning, disabled }) {
     .filter(Boolean)
     .join(' ');
 
+  // Allow keyboard users to trigger with Enter or Space
+  function handleKeyDown(e) {
+    if ((e.key === 'Enter' || e.key === ' ') && !disabled && !value) {
+      e.preventDefault();
+      onClick();
+    }
+  }
+
   return (
     <button
       className={classes}
       onClick={onClick}
+      onKeyDown={handleKeyDown}
       disabled={disabled || !!value}
-      aria-label={value ? `Square filled with ${value}` : 'Empty square'}
+      aria-label={
+        value
+          ? `Square filled with ${value}${isWinning ? ', winning square' : ''}`
+          : 'Empty square'
+      }
     >
       {value}
     </button>
