@@ -1,26 +1,30 @@
-/* ─── CSS Custom Properties ──────────────────────────────────────────────── */
+/* ─── Component-level tokens ──────────────────────────────────────────────── */
 :root {
-  --x-color: #6366f1;      /* indigo */
-  --o-color: #f59e0b;      /* amber */
-  --win-glow: #22c55e;     /* green */
-  --draw-color: #94a3b8;   /* slate */
-  --radius: 12px;
-  --sq-size: clamp(72px, 20vw, 100px);
-  --gap: 8px;
+  --x-color:     var(--grey-600);      /* X is charcoal grey  */
+  --o-color:     var(--green-600);     /* O is green          */
+  --win-glow:    var(--green-500);
+  --draw-color:  var(--grey-400);
+  --radius:      12px;
+  --sq-size:     clamp(72px, 20vw, 100px);
+  --gap:         8px;
 }
 
-/* ─── Layout ─────────────────────────────────────────────────────────────── */
+/* ─── App layout ─────────────────────────────────────────────────────────── */
 .app {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 24px 16px 48px;
-  gap: 32px;
+  gap: 24px;
 }
 
 .app__header {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 .app__title {
@@ -33,14 +37,14 @@
 
 .app__title-x   { color: var(--x-color); }
 .app__title-o   { color: var(--o-color); }
-.app__title-sep { color: var(--text); font-weight: 300; }
+.app__title-sep { color: var(--grey-400); font-weight: 300; }
 
 .app__subtitle {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 4px;
-  color: var(--text);
-  margin-top: 4px;
+  color: var(--grey-400);
+  margin-top: 0;
 }
 
 .app__main {
@@ -49,18 +53,121 @@
   align-items: flex-start;
   gap: 40px;
   width: 100%;
-  max-width: 800px;
+  max-width: 820px;
   justify-content: center;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 620px) {
   .app__main {
     flex-direction: column;
     align-items: center;
   }
 }
 
-/* ─── Game Section ───────────────────────────────────────────────────────── */
+/* ─── Mode Selector ──────────────────────────────────────────────────────── */
+.mode-selector {
+  display: flex;
+  gap: 8px;
+}
+
+.mode-btn {
+  padding: 8px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  border-radius: 999px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+}
+
+.mode-btn:hover {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.mode-btn--active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  cursor: default;
+}
+
+/* ─── Scoreboard ─────────────────────────────────────────────────────────── */
+.scoreboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.scoreboard__title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--grey-400);
+  font-weight: 600;
+  margin: 0;
+}
+
+.scoreboard__cells {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.scoreboard__cell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 10px;
+  border-radius: var(--radius);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  transition: border-color 0.2s;
+}
+
+.scoreboard__cell--x {
+  border-color: rgba(75, 85, 99, 0.4);   /* grey-600 tint */
+  background: rgba(75, 85, 99, 0.05);
+}
+
+.scoreboard__cell--o {
+  border-color: rgba(22, 163, 74, 0.4);  /* green-600 tint */
+  background: rgba(22, 163, 74, 0.05);
+}
+
+.scoreboard__cell--draw {
+  border-color: rgba(156, 163, 175, 0.4);
+  background: rgba(156, 163, 175, 0.05);
+}
+
+.scoreboard__label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.scoreboard__cell--x .scoreboard__label { color: var(--x-color); }
+.scoreboard__cell--o .scoreboard__label { color: var(--o-color); }
+
+.scoreboard__value {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-h);
+}
+
+/* ─── Game section ───────────────────────────────────────────────────────── */
 .game {
   display: flex;
   flex-direction: column;
@@ -70,7 +177,7 @@
 
 /* ─── Status ─────────────────────────────────────────────────────────────── */
 .status {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 600;
   padding: 10px 24px;
   border-radius: 999px;
@@ -80,23 +187,25 @@
   margin: 0;
 }
 
-.status--winner {
-  animation: pulse 0.6s ease-in-out;
-}
+.status--winner { animation: pulse 0.6s ease-in-out; }
+
 .status--winner.status--x {
   color: var(--x-color);
   border-color: var(--x-color);
-  background: rgba(99, 102, 241, 0.1);
+  background: rgba(75, 85, 99, 0.08);
 }
+
 .status--winner.status--o {
   color: var(--o-color);
   border-color: var(--o-color);
-  background: rgba(245, 158, 11, 0.1);
+  background: rgba(22, 163, 74, 0.08);
 }
+
 .status--draw {
   color: var(--draw-color);
   border-color: var(--draw-color);
 }
+
 .status--next.status--x { color: var(--x-color); }
 .status--next.status--o { color: var(--o-color); }
 
@@ -120,7 +229,7 @@
   height: var(--sq-size);
   border-radius: var(--radius);
   border: 2px solid var(--border);
-  background: var(--bg);
+  background: var(--surface);
   font-size: clamp(1.6rem, 7vw, 2.4rem);
   font-weight: 800;
   cursor: pointer;
@@ -135,7 +244,6 @@
   outline-offset: 3px;
 }
 
-/* hover — only empty, interactive squares */
 .square--empty:hover {
   background: var(--accent-bg);
   border-color: var(--accent-border);
@@ -143,25 +251,22 @@
   box-shadow: var(--shadow);
 }
 
-/* filled X */
 .square--x {
   color: var(--x-color);
-  border-color: rgba(99, 102, 241, 0.4);
-  background: rgba(99, 102, 241, 0.06);
+  border-color: rgba(75, 85, 99, 0.35);
+  background: rgba(75, 85, 99, 0.06);
   cursor: default;
 }
 
-/* filled O */
 .square--o {
   color: var(--o-color);
-  border-color: rgba(245, 158, 11, 0.4);
-  background: rgba(245, 158, 11, 0.06);
+  border-color: rgba(22, 163, 74, 0.35);
+  background: rgba(22, 163, 74, 0.06);
   cursor: default;
 }
 
-/* winning highlight */
 .square--winning {
-  background: rgba(34, 197, 94, 0.15) !important;
+  background: rgba(34, 197, 94, 0.18) !important;
   border-color: var(--win-glow) !important;
   box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
   animation: winPop 0.4s ease;
@@ -173,18 +278,34 @@
   100% { transform: scale(1); }
 }
 
-/* disabled state when game is over — keep colours, remove hover */
-.square:disabled {
-  cursor: not-allowed;
-}
+.square:disabled { cursor: not-allowed; }
+
 .square--empty:disabled:hover {
-  background: var(--bg);
+  background: var(--surface);
   border-color: var(--border);
   transform: none;
   box-shadow: none;
 }
 
-/* ─── Restart Button ─────────────────────────────────────────────────────── */
+/* ─── Game actions ───────────────────────────────────────────────────────── */
+.game__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.game__starter-hint {
+  font-size: 0.85rem;
+  color: var(--text);
+  opacity: 0.8;
+}
+
+.game__starter-hint strong {
+  color: var(--accent);
+}
+
+/* ─── Restart / Next game button ─────────────────────────────────────────── */
 .btn-restart {
   padding: 10px 28px;
   font-size: 1rem;
@@ -195,7 +316,7 @@
   background: var(--accent-bg);
   color: var(--accent);
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s, color 0.2s;
   letter-spacing: 0.5px;
 }
 
@@ -206,11 +327,9 @@
   box-shadow: var(--shadow);
 }
 
-.btn-restart:active {
-  transform: translateY(0);
-}
+.btn-restart:active { transform: translateY(0); }
 
-/* ─── Move History / Time Travel ─────────────────────────────────────────── */
+/* ─── Move History ───────────────────────────────────────────────────────── */
 .history {
   min-width: 180px;
   display: flex;
@@ -219,10 +338,10 @@
 }
 
 .history__title {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 3px;
-  color: var(--text);
+  color: var(--grey-400);
   font-weight: 600;
   margin: 0;
 }
@@ -245,7 +364,7 @@
   font-weight: 500;
   border-radius: 8px;
   border: 1px solid var(--border);
-  background: var(--bg);
+  background: var(--surface);
   color: var(--text);
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s, color 0.15s;
@@ -265,11 +384,9 @@
   cursor: default;
 }
 
-/* ─── Responsive tweaks ──────────────────────────────────────────────────── */
-@media (max-width: 600px) {
-  .history {
-    width: 100%;
-  }
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 620px) {
+  .history { width: 100%; }
 
   .history__list {
     flex-direction: row;
@@ -281,4 +398,6 @@
     width: auto;
     flex: 1 1 calc(50% - 6px);
   }
+
+  .scoreboard__cells { gap: 8px; }
 }
