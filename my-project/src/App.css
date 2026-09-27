@@ -209,6 +209,18 @@
 .status--next.status--x { color: var(--x-color); }
 .status--next.status--o { color: var(--o-color); }
 
+.status--thinking {
+  color: var(--grey-400);
+  border-color: var(--grey-300);
+  background: var(--code-bg);
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
 @keyframes pulse {
   0%   { transform: scale(1); }
   50%  { transform: scale(1.08); }

@@ -106,6 +106,12 @@ export default function App() {
             starterIsX={starterIsX}
           />
 
+          {isComputerTurn && (
+            <p className="status status--thinking" aria-live="polite">
+              🤖 CPU is thinking…
+            </p>
+          )}
+
           <Board
             squares={currentBoard}
             winningLine={winResult?.line ?? null}
