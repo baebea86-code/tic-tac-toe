@@ -39,6 +39,9 @@ export default function Scoreboard({ score, mode, onResetScores }) {
           <span className="scoreboard__value">{score.O}</span>
         </div>
       </div>
+      <p className="scoreboard__games-played">
+        {score.X + score.O + score.draws} game{score.X + score.O + score.draws !== 1 ? 's' : ''} played
+      </p>
     </div>
   );
 }

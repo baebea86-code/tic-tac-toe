@@ -192,6 +192,12 @@
   color: var(--text-h);
 }
 
+.scoreboard__games-played {
+  font-size: 0.78rem;
+  color: var(--grey-400);
+  margin-top: 2px;
+}
+
 /* ─── Game section ───────────────────────────────────────────────────────── */
 .game {
   display: flex;
