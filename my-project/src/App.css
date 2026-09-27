@@ -106,6 +106,12 @@
   max-width: 360px;
 }
 
+.scoreboard__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .scoreboard__title {
   font-size: 0.8rem;
   text-transform: uppercase;
@@ -113,6 +119,25 @@
   color: var(--grey-400);
   font-weight: 600;
   margin: 0;
+}
+
+.scoreboard__reset {
+  font-size: 0.75rem;
+  font-family: inherit;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--grey-400);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.scoreboard__reset:hover {
+  color: #ef4444;
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.06);
 }
 
 .scoreboard__cells {

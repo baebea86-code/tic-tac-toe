@@ -76,6 +76,10 @@ export default function App() {
     dispatch({ type: ACTIONS.SET_MODE, payload: { mode: newMode } });
   }
 
+  function handleResetScores() {
+    dispatch({ type: ACTIONS.RESET_SCORES });
+  }
+
   // Determine who opens the next game for the hint text
   const nextStarter = state.gameCount % 2 !== 0 ? 'X' : 'O';
 
@@ -94,7 +98,7 @@ export default function App() {
       </header>
 
       {/* Scoreboard */}
-      <Scoreboard score={score} mode={mode} />
+      <Scoreboard score={score} mode={mode} onResetScores={handleResetScores} />
 
       <main className="app__main">
         <section className="game" aria-label="Game area">

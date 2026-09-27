@@ -53,6 +53,7 @@ export const ACTIONS = {
   JUMP_TO:       'JUMP_TO',
   SET_MODE:      'SET_MODE',
   RECORD_RESULT: 'RECORD_RESULT',
+  RESET_SCORES:  'RESET_SCORES',
 };
 
 // ─── Reducer ──────────────────────────────────────────────────────────────────
@@ -125,6 +126,10 @@ export function gameReducer(state, action) {
       const starterIsNext = step % 2 === 0;
       const xIsNext = state.starterIsX ? starterIsNext : !starterIsNext;
       return { ...state, stepIndex: step, xIsNext };
+    }
+
+    case ACTIONS.RESET_SCORES: {
+      return { ...state, score: { X: 0, O: 0, draws: 0 } };
     }
 
     default:
