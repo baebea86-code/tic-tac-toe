@@ -2,9 +2,9 @@
  * History — lists every move and lets the player jump to any past state.
  *
  * Props:
- *   history     – array of board snapshots
- *   stepIndex   – currently viewed step
- *   onJumpTo    – (step: number) => void
+ *   history   – array of board snapshots
+ *   stepIndex – currently viewed step
+ *   onJumpTo  – (step: number) => void
  */
 export default function History({ history, stepIndex, onJumpTo }) {
   return (
