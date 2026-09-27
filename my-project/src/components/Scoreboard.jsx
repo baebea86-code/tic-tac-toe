@@ -1,4 +1,29 @@
+import { useRef, useEffect } from 'react';
 import { MODES } from '../gameReducer';
+
+/**
+ * AnimatedValue — flashes when the number changes.
+ */
+function AnimatedValue({ value }) {
+  const ref = useRef(null);
+  const prevRef = useRef(value);
+
+  useEffect(() => {
+    if (prevRef.current !== value && ref.current) {
+      ref.current.classList.remove('score-pop');
+      // Force reflow to restart the animation
+      void ref.current.offsetWidth;
+      ref.current.classList.add('score-pop');
+    }
+    prevRef.current = value;
+  }, [value]);
+
+  return (
+    <span className="scoreboard__value" ref={ref}>
+      {value}
+    </span>
+  );
+}
 
 /**
  * Scoreboard — displays wins for X, draws, and wins for O.
@@ -28,15 +53,15 @@ export default function Scoreboard({ score, mode, onResetScores }) {
       <div className="scoreboard__cells">
         <div className="scoreboard__cell scoreboard__cell--x">
           <span className="scoreboard__label">{xLabel}</span>
-          <span className="scoreboard__value">{score.X}</span>
+          <AnimatedValue value={score.X} />
         </div>
         <div className="scoreboard__cell scoreboard__cell--draw">
           <span className="scoreboard__label">Draws</span>
-          <span className="scoreboard__value">{score.draws}</span>
+          <AnimatedValue value={score.draws} />
         </div>
         <div className="scoreboard__cell scoreboard__cell--o">
           <span className="scoreboard__label">{oLabel}</span>
-          <span className="scoreboard__value">{score.O}</span>
+          <AnimatedValue value={score.O} />
         </div>
       </div>
       <p className="scoreboard__games-played">
