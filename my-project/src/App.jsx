@@ -110,12 +110,6 @@ export default function App() {
             starterIsX={starterIsX}
           />
 
-          {isComputerTurn && (
-            <p className="status status--thinking" aria-live="polite">
-              🤖 CPU is thinking…
-            </p>
-          )}
-
           <Board
             squares={currentBoard}
             winningLine={winResult?.line ?? null}
@@ -129,7 +123,7 @@ export default function App() {
               onClick={handleReset}
               aria-label="Start next game"
             >
-              🔁 Next Game
+              Next Game
             </button>
             {gameOver && (
               <p className="game__starter-hint">

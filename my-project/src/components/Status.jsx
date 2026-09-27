@@ -23,10 +23,10 @@ export default function Status({ winner, isDraw, xIsNext, mode, starterIsX }) {
   let modifier = '';
 
   if (winner) {
-    message  = `🏆 ${playerLabel(winner)} wins!`;
+    message  = `${playerLabel(winner)} wins!`;
     modifier = `status--winner status--${winner.toLowerCase()}`;
   } else if (isDraw) {
-    message  = "🤝 It's a Draw!";
+    message  = "It's a Draw!";
     modifier = 'status--draw';
   } else {
     const next = xIsNext ? 'X' : 'O';

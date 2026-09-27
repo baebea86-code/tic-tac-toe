@@ -15,14 +15,14 @@ export default function ModeSelector({ mode, onChange }) {
         onClick={() => onChange(MODES.VS_COMPUTER)}
         aria-pressed={mode === MODES.VS_COMPUTER}
       >
-        🤖 vs Computer
+        vs Computer
       </button>
       <button
         className={`mode-btn${mode === MODES.TWO_PLAYER ? ' mode-btn--active' : ''}`}
         onClick={() => onChange(MODES.TWO_PLAYER)}
         aria-pressed={mode === MODES.TWO_PLAYER}
       >
-        👥 2 Players
+        2 Players
       </button>
     </div>
   );
